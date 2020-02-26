@@ -18,8 +18,7 @@ public class WhiskyController {
     WhiskyRepository whiskyRepository;
 
     @GetMapping(value = "/search/findWhiskiesOfAgeFromGivenDistillery")
-    public List<Whisky> findWhiskiesOfAgeFromGivenDistillery(@RequestParam String name, int year){
-        return whiskyRepository.findWhiskiesOfAgeFromGivenDistillery(name, year);
+    public List<Whisky> findWhiskiesOfAgeFromGivenDistillery(@RequestParam String name, int age){
+        return whiskyRepository.findWhiskiesOfAgeFromGivenDistillery(name, age);
     }
-
 }

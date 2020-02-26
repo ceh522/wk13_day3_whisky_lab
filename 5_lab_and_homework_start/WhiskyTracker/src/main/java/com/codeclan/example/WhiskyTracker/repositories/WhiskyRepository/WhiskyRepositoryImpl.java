@@ -8,6 +8,7 @@ import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import java.util.List;
@@ -16,15 +17,15 @@ public class WhiskyRepositoryImpl implements WhiskyRepositoryCustom {
     @Autowired
     EntityManager entityManager;
 
-    public List<Whisky> findWhiskiesOfAgeFromGivenDistillery(String name, int year){
+    @Transactional
+    public List<Whisky> findWhiskiesOfAgeFromGivenDistillery(String name, int age){
         List<Whisky> result = null;
-        Session session =entityManager.unwrap(Session.class);
+        Session session = entityManager.unwrap(Session.class);
         try{
             Criteria cr = session.createCriteria(Whisky.class);
             cr.createAlias("distillery", "distilleryAlias");
             cr.add(Restrictions.eq("distilleryAlias.name", name));
-            cr.add(Restrictions.eq("year", year));
-
+            cr.add(Restrictions.eq("age", age));
             result = cr.list();
         }
         catch (HibernateException ex){
